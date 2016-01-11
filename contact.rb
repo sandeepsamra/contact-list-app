@@ -15,11 +15,20 @@ class Contact
     # Returns an Array of Contacts loaded from the database.
     def all
       # TODO: Return an Array of Contact instances made from the data in 'contacts.csv'.
+      contact_list = CSV.foreach('contact_index.csv') do |row|
+        puts row.inspect
+      end
+      puts contact_list
     end
 
     # Creates a new contact, adding it to the database, returning the new contact.
     def create(name, email)
       # TODO: Instantiate a Contact, add its data to the 'contacts.csv' file, and return it.
+      # save name and email input to CSV file
+      # then display message saying contact created successfully
+
+      
+
     end
 
     # Returns the contact with the specified id. If no contact has the id, returns nil.
