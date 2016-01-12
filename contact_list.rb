@@ -19,11 +19,11 @@ class ContactList
   when "show"
     puts "What is the contact ID?"
     id = gets.chomp
-    Contact.find(id)
+    puts Contact.find(id)
   when "search"
     puts "Please enter a search term"
     term = gets.chomp
-    Contact.search(term)
+    puts Contact.search(term)
   else
     puts "Here is a list of available commands:", "new - Create a new contact", "list - List all contacts", "show - Show a contact", "search - Search contacts"
   end
