@@ -24,18 +24,15 @@ class Contact
 
   # Returns an Array of Contacts loaded from the database.
   def self.all
-    contacts = []
     results = connection.exec("SELECT * FROM contacts;")
-    results.each do |row|
-      existing_contact = Contact.new(
+    results.map do |row|
+      contact = Contact.new(
         row['id'],
         row['name'],
         row['email']
       )
-      contacts.push(existing_contact)
-    end
-    contacts.map do |x|
-      "#{x.id}: #{x.name}, #{x.email}"
+
+      "#{contact.id}: #{contact.name}, #{contact.email}"
     end
   end
 
@@ -67,25 +64,21 @@ class Contact
       )
       return @found_contact
     else
-      nil
+      return nil
     end
   end
 
   # Returns an array of contacts who match the given term.
   def self.search(term)
-    contacts = []
     term = '%' + term + '%'
     result = connection.exec_params("SELECT * FROM contacts WHERE name like $1::varchar;", [term])
-    result.each do |row|
-      existing_contact = Contact.new(
+    result.map do |row|
+      contact = Contact.new(
         row['id'],
         row['name'],
         row['email']
       )
-      contacts.push(existing_contact)
-    end
-    contacts.map do |x|
-      "#{x.id}: #{x.name}, #{x.email}"
+      "#{contact.id}: #{contact.name}, #{contact.email}"
     end
   end
 
