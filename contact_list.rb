@@ -14,6 +14,7 @@ class ContactList
     puts "What is the contact's email?"
     email = gets.chomp
     Contact.create(name, email)
+    puts "Contact has been added"
   when "list"
     puts Contact.all
   when "show"
@@ -36,6 +37,13 @@ class ContactList
     the_contact.name = new_name
     the_contact.email = new_email
     the_contact.save
+    puts "Contact has been updated"
+  when "destroy"
+    puts "What is the ID of the contact you would like to destroy?"
+    user_destroy = gets.chomp
+    contact_destroy = Contact.find(user_destroy)
+    contact_destroy.destroy
+    puts "Contact has been deleted"
   else
     puts "Here is a list of available commands:", "new - Create a new contact", "list - List all contacts", "show - Show a contact", "search - Search contacts"
   end

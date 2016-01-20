@@ -52,7 +52,7 @@ class Contact
   # Creates a new contact, adding it to the database, returning the new contact.
   def self.create(name, email)
     new_contact = Contact.new(name, email)
-    new_contact.save(name, email)
+    new_contact.save
   end
 
   # Returns the contact with the specified id. If no contact has the id, returns nil.
@@ -87,6 +87,11 @@ class Contact
     contacts.map do |x|
       "#{x.id}: #{x.name}, #{x.email}"
     end
+  end
+
+  def destroy
+    self.class.connection.exec_params("DELETE FROM contacts WHERE id = $1::int;",
+    [self.id])
   end
 
 end
