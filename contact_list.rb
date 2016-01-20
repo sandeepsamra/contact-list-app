@@ -15,7 +15,7 @@ class ContactList
     email = gets.chomp
     Contact.create(name, email)
   when "list"
-    Contact.all
+    puts Contact.all
   when "show"
     puts "What is the contact ID?"
     id = gets.chomp
