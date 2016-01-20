@@ -39,9 +39,14 @@ class Contact
     end
   end
 
-  def save(name, email)
-    self.class.connection.exec_params("INSERT INTO contacts (name, email) VALUES ($1, $2)",
-    [self.name, self.email])
+  def save
+    if id == nil
+      self.class.connection.exec_params("INSERT INTO contacts (name, email) VALUES ($1, $2)",
+      [self.name, self.email])
+    else
+      self.class.connection.exec_params("UPDATE contacts SET name = $1, email = $2 WHERE id = $3::int;",
+      [self.name, self.email, self.id])
+    end
   end
 
   # Creates a new contact, adding it to the database, returning the new contact.
@@ -55,12 +60,12 @@ class Contact
     result = connection.exec_params("SELECT * FROM contacts WHERE id = $1::int",
       [id])
     if row = result.first
-      found_contact = Contact.new(
+      @found_contact = Contact.new(
         row['id'],
         row['name'],
         row['email']
       )
-      puts "#{found_contact.id}: #{found_contact.name}, #{found_contact.email}"
+      return @found_contact
     else
       nil
     end

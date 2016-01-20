@@ -19,11 +19,23 @@ class ContactList
   when "show"
     puts "What is the contact ID?"
     id = gets.chomp
-    puts Contact.find(id)
+    found_contact = Contact.find(id)
+    puts "#{found_contact.id}: #{found_contact.name}, #{found_contact.email}"
   when "search"
     puts "Please enter a search term"
     term = gets.chomp
     puts Contact.search(term)
+  when "update" #ARGV = id
+    puts "Please enter the id of the contact you would like to update"
+    contact_id = gets.chomp
+    puts "Please enter a new name"
+    new_name = gets.chomp
+    puts "Please enter a new email"
+    new_email = gets.chomp
+    the_contact = Contact.find(contact_id)
+    the_contact.name = new_name
+    the_contact.email = new_email
+    the_contact.save
   else
     puts "Here is a list of available commands:", "new - Create a new contact", "list - List all contacts", "show - Show a contact", "search - Search contacts"
   end
